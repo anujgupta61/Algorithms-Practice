@@ -38,8 +38,26 @@ class Search {
     System . out . println(num + " not found ...") ;
   }
 
+  public void binarySearchRecursive(int first , int last , int num) { // O(logn) - Time , O(logn) - Space
+    if(first > last) {
+      System . out . println(num + " not found ...") ;
+      return ;
+    } else {
+      int mid = (first + last) / 2 ;
+      if(this . arr[mid] == num) {
+        System . out . println(num + " found at pos : " + mid) ;
+        return ;
+      } else {
+        if(this . arr[mid] < num)
+          binarySearchRecursive(mid + 1 , last , num) ;
+        else
+          binarySearchRecursive(first , mid - 1 , num) ;
+      }
+    }
+  }
+
   public void ternarySearch(int num) { // Time - O(logn) with log base 3
-    // 2Log2n + 1 comparisons in Binary Search , 4Log3n + 1 in Ternary Search
+    // 2Logn + 1 (log base 2) comparisons in Binary Search , 4Logn + 1 (log base 3) in Ternary Search
     // Binary Search is better than Ternary Search in worst case because of more comparisons
     int[] arr = this . arr ;
     int low = 0 , high = arr . length - 1 ;
@@ -72,26 +90,8 @@ class Search {
     System . out . println(num + " not found ...") ;
   }
 
-  public void binarySearchRecursive(int first , int last , int num) { // O(logn) - Time , O(logn) - Space
-    if(first > last) {
-      System . out . println(num + " not found ...") ;
-      return ;
-    } else {
-      int mid = (first + last) / 2 ;
-      if(this . arr[mid] == num) {
-        System . out . println(num + " found at pos : " + mid) ;
-        return ;
-      } else {
-        if(this . arr[mid] < num)
-          binarySearchRecursive(mid + 1 , last , num) ;
-        else
-          binarySearchRecursive(first , mid - 1 , num) ;
-      }
-    }
-  }
-
   public void interpolationSearch(int num) { // Improvement over Binary Search , Sorted Array
-    // Time - O(log(logn)) , If uniformly distributed ; Worst case - O(n) , Space - O(1)
+    // Time - O(log(logn)) only If uniformly distributed . Worst case - O(n) , Space - O(1)
     int[] arr = this . arr ;
     int low = 0 , high = arr . length - 1 ;
     while(low <= high) {
