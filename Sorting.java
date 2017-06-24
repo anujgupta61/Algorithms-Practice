@@ -149,6 +149,35 @@ class MySorting {
 		System.out.println("Array sorted ...");
 		this.displayArray();
 	}
+
+	private int partition(int left, int right) {
+		int[] a = this.arr;
+		int pivot = a[right];
+		int i = left, j = right - 1;
+		while(true) {
+			while((this.order == 1) ? (a[i] < pivot) : (a[i] > pivot))
+				i ++;
+			while((j > 0) && ((this.order == 1) ? (a[j] > pivot) : (a[j] < pivot)))
+				j --;
+			if(i >= j)
+				break;
+			int temp = a[i];
+			a[i] = a[j];
+			a[j] = temp;
+		}
+		int temp = a[i];
+		a[i] = pivot;
+		a[right] = temp;
+		return i;
+	}
+
+	public void quickSort(int left, int right) {
+		if(left >= right)
+			return;
+		int part = this.partition(left, right);
+		quickSort(left, part - 1);
+		quickSort(part + 1, right);
+	}
 }
 
 public class Sorting {
@@ -158,7 +187,7 @@ public class Sorting {
 		int choice = 0;
 		while(choice != 6) {
 			System.out.println("1: Insert new array\n2: Bubble sort\n3: Insertion sort\n4: Selection sort\n5: Display array\n6: Exit\n" + 
-				"7: Merge sort\n8: Shell sort");
+				"7: Merge sort\n8: Shell sort\n9: Quick sort");
 			System.out.print("Choice: ");
 			choice = scan.nextInt();
 			switch(choice) {
@@ -217,6 +246,17 @@ public class Sorting {
 					else {
 						ms.setOrder();
 						ms.shellSort();
+					}
+					break;
+				}
+				case 9: {
+					if(ms.n == 0)
+						System.out.println("Array is empty. Insert new one.");
+					else {
+						ms.setOrder();
+						ms.quickSort(0 , ms.n - 1);
+						System.out.println("Array sorted ...");
+						ms.displayArray();
 					}
 					break;
 				}
